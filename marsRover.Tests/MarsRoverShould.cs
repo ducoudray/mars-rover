@@ -22,12 +22,14 @@ namespace MarsRover.Tests
         [DataRow("1 1 E", "L", "1 1 N")]
         [DataRow("1 1 N", "L", "1 1 W")]
         [DataRow("1 1 W", "L", "1 1 S")]
+        [DataRow("1 1 W", "LL", "1 1 E")]
+        [DataRow("1 2 N", "LMLMLMLMM", "1 3 N")]
+        [DataRow("3 3 E", "MMRMMRMRRM", "5 1 E")]
         public void ExecuteTest(string initialState, string commands , string finalState)
         {
             var marsRover = new MarsRover(initialState);
             var result = marsRover.Execute(commands);
             Assert.IsTrue(result == finalState);
-
         }
         
 

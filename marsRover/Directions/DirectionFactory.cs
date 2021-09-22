@@ -9,21 +9,16 @@ namespace MarsRover
         public DirectionFactory()
         {
         }
-        public static IDirection CreateDirection( string direction)
+        public static IDirection CreateDirection(string direction)
         {
-            switch (direction)
+            return direction switch
             {
-                case "N":
-                    return new North();                                            
-                case "W":
-                    return new West();                    
-                case "E":
-                    return new East();
-                case "S":
-                    return new South();
-                default:
-                    throw new NotImplementedException($"Direction {direction} is not implemented yet");                    
-            }
+                "N" => new North(),
+                "W" => new West(),
+                "E" => new East(),
+                "S" => new South(),
+                _ => throw new NotImplementedException($"Direction {direction} is not implemented yet"),
+            };
         }
     }
 }

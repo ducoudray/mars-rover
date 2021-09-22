@@ -4,8 +4,7 @@ using System.Text;
 
 namespace MarsRover
 {
-    interface ICommand
-    {
-        void Execute();
+    interface ICommand 
+    {        
     }
 }

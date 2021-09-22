@@ -1,40 +1,38 @@
-﻿namespace MarsRover
+﻿using MarsRover.Commands;
+using System;
+using System.Linq;
+
+namespace MarsRover
 
 {
     public class MarsRover
     {
         private readonly string _initialState;
-        private Position _position;
-        private IDirection _direction;
+        private Rover _rover;
+        private ICommand _command;
 
         public MarsRover(string initialState)
         {            
-            this._initialState = initialState;            
+            this._initialState = initialState;                        
         }
 
 
-        public string Execute(string command)
+        public string Execute(string inputCommands)
         {
-            var states = _initialState.Split(" ");
-            var x = int.Parse(states[0]);
-            var y = int.Parse(states[1]);
-            _position = new Position(x, y);
+            _rover = RoverFactory.CreateRover(_initialState);
 
-            var directionInput = states[2];
-            _direction = DirectionFactory.CreateDirection(directionInput);
-            if (command == "M")
-            {                
-                _position = _direction.MoveForward(_position);
-            }            
-            if (command == "R")
-            {
-                _direction = _direction.ToRight();
-            }
-            if (command == "L")
-            {
-                _direction = _direction.ToLeft();
-            }
-            return $"{_position.X} {_position.Y} {_direction.AsString()}";
+            var charCommans = inputCommands.ToCharArray().ToList();            
+
+            charCommans.ForEach(character => {
+
+            _command = CommandFactory.CreateCommand(character);
+            _rover = _rover.Apply(_command);
+
+            });
+            
+            return _rover.PrintState();
         }
+
+        
     }
 }
